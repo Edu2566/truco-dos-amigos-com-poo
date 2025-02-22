@@ -1,0 +1,252 @@
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Corpo da página */
+body {
+    font-family: 'Arial', sans-serif;
+    background: 
+        linear-gradient(135deg, #013220 0%, #004d00 35%, #006400 65%, #013220 100%),
+        url('textura.jpg');
+    background-blend-mode: overlay;
+    background-size: cover;
+    background-repeat: repeat;
+    color: #fff;
+    padding: 20px;
+}
+
+/* Título principal */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+/* Layout da área dos times e do somador de pontos */
+.container-teams {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* Time 1 | Somador | Time 2 */
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Bloco de cada time */
+.team {
+    background: linear-gradient(145deg, #001a00 10%, #003300 40%, #002200 70%, #000000 100%);
+    border: 2px solid #000;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    color: #fff;
+}
+
+/* Cabeçalho do time */
+.team h2 {
+    background-color: #008000;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* Container dos jogadores */
+.team-players {
+    display: flex;
+    flex-direction: column; /* Padrão: jogadores em coluna */
+    align-items: center;
+    gap: 10px;
+}
+
+/* Estilização das imagens dos jogadores */
+.team img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Nome dos jogadores */
+.team p {
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Painel de pontuação no centro */
+.score-panel {
+    background: linear-gradient(145deg, #225522 10%, #2e3b2e 40%, #1a2a1a 100%); 
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    color: #fff;
+    text-align: center;
+    width: 200px;
+}
+
+/* Título do painel de pontuação */
+.score-panel h3 {
+    margin-bottom: 10px;
+    color: #00cc00;
+}
+
+/* Estilização do formulário dentro do painel de pontuação */
+.score-panel form {
+    background: linear-gradient(145deg, #1a331a 10%, #224422 40%, #1a2a1a 100%);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #0d1a0d;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Estilização do select */
+.score-panel select {
+    background-color: #2a4a2a;
+    color: #fff;
+    border: 1px solid #0d1a0d;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Organização dos botões */
+.score-panel .buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+}
+
+/* Ajuste dos botões */
+.score-panel button {
+    background-color: #008000;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+    flex: 1;
+    min-width: 50px;
+}
+
+.score-panel button:hover {
+    background-color: #006400;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container-teams {
+        grid-template-columns: 1fr; /* Times e painel empilhados */
+    }
+
+    .score-panel {
+        width: 100%;
+    }
+
+    .score-panel .buttons-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .score-panel form {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .score-panel button {
+        flex: 1;
+        min-width: 50px;
+        padding: 8px 12px;
+    }
+
+    /* Jogadores em linha na visão mobile */
+    .team-players {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .team img {
+        width: 80px; /* Reduz o tamanho das imagens em mobile */
+        height: 80px;
+    }
+}
+
+/* Estilização dos formulários */
+form {
+    background: linear-gradient(145deg, #1a331a 10%, #224422 40%, #1a2a1a 100%);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #0d1a0d;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* Títulos dos formulários */
+form h3 {
+    color: #00cc00;
+    text-align: center;
+}
+
+/* Estilização dos selects e inputs */
+form select, 
+form input {
+    background-color: #2a4a2a;
+    color: #fff;
+    border: 1px solid #0d1a0d;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Botões gerais */
+form button {
+    background-color: #008000;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+form button:hover {
+    background-color: #006400;
+}
+
+/* Responsividade para formulários */
+@media (max-width: 768px) {
+    form {
+        width: 90%;
+    }
+
+    h1 {
+        display: none;
+    }
+}

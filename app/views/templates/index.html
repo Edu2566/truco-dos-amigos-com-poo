@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador de Truco</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script>
+    function updatePhoto(memberSelectId, imgId, nameId) {
+      let playerName = document.getElementById(memberSelectId).value;
+      let formattedName = playerName.toLowerCase().replace(/\s/g, '').replace(/'/g, '');
+      
+      // Atualiza a imagem com base no nome selecionado
+      document.getElementById(imgId).src = "{{ url_for('static', filename='') }}" + formattedName + ".jpg";
+      
+      // Atualiza o texto exibido com o nome do jogador
+      document.getElementById(nameId).innerText = playerName;
+    }
+  </script>    
+</head>
+<body>
+  <h1>Contador de Truco</h1>
+
+  <!-- Tela de Vitória Especial -->
+  {% if winner %}
+  <div id="victory-container" style="text-align: center; margin: 20px;">
+    <!-- Reprodução automática do som de vitória -->
+    <audio id="victory-sound" src="{{ url_for('static', filename='victoryroyale.m4a') }}" autoplay></audio>
+    <!-- Imagem de vitória -->
+    <img src="{{ url_for('static', filename='victoryroyale.png') }}" alt="Vitória!" style="max-width: 200px; margin-top: 20px;">
+    <!-- Mensagem de vitória -->
+    <h3>{{ winner }}</h3>
+  </div>
+  {% endif %}
+
+  <!-- Container principal usando Grid -->
+  <div class="container-teams">
+    
+    <!-- Equipe 1 -->
+    <div class="team">
+        <h2>{{ team1.name }}: {{ team1.score }} pontos</h2>
+        <div class="team-players">
+            <div>
+                <img id="team1_player1" src="{{ url_for('static', filename=team1.photos[0]) }}" width="100">
+                <p id="team1_name1">{{ team1.members[0] }}</p>
+            </div>
+            <div>
+                <img id="team1_player2" src="{{ url_for('static', filename=team1.photos[1]) }}" width="100">
+                <p id="team1_name2">{{ team1.members[1] }}</p>
+            </div>
+            <div>
+                <img id="team1_player3" src="{{ url_for('static', filename=team1.photos[2]) }}" width="100">
+                <p id="team1_name3">{{ team1.members[2] }}</p>
+            </div>
+        </div>
+    </div> 
+
+    <!-- Painel de pontuação no centro -->
+    <div class="score-panel">
+        <h3>Adicionar Pontos</h3>
+        <form action="{{ url_for('add') }}" method="post">
+            <select name="team">
+                <option value="1">{{ team1.name }}</option>
+                <option value="2">{{ team2.name }}</option>
+            </select>
+            
+            <!-- Container para alinhar os botões na horizontal no mobile -->
+            <div class="buttons-container">
+                <button type="submit" name="points" value="1">+1</button>
+                <button type="submit" name="points" value="3">+3</button>
+                <button type="submit" name="points" value="6">+6</button>
+                <button type="submit" name="points" value="9">+9</button>
+                <button type="submit" name="points" value="12">+12</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Equipe 2 -->
+    <div class="team">
+        <h2>{{ team2.name }}: {{ team2.score }} pontos</h2>
+        <div class="team-players">
+            <div>
+                <img id="team2_player1" src="{{ url_for('static', filename=team2.photos[0]) }}" width="100">
+                <p id="team2_name1">{{ team2.members[0] }}</p>
+            </div>
+            <div>
+                <img id="team2_player2" src="{{ url_for('static', filename=team2.photos[1]) }}" width="100">
+                <p id="team2_name2">{{ team2.members[1] }}</p>
+            </div>
+            <div>
+                <img id="team2_player3" src="{{ url_for('static', filename=team2.photos[2]) }}" width="100">
+                <p id="team2_name3">{{ team2.members[2] }}</p>
+            </div>
+        </div>
+    </div>  
+  </div>
+
+  <!-- Formulário para atualizar jogadores da Equipe 1 -->
+  <h2>Alterar Jogadores da Equipe 1</h2>
+  <form action="{{ url_for('update') }}" method="post">
+    <input type="hidden" name="team" value="1">
+    
+    <label for="member1_1">Membro 1:</label>
+    <select name="member1" id="member1_1" onchange="updatePhoto('member1_1', 'team1_player1', 'team1_name1')">
+      {% for player in team1.PLAYERS_LIST %}
+        <option value="{{ player }}" {% if player == team1.members[0] %}selected{% endif %}>{{ player }}</option>
+      {% endfor %}
+    </select>
+    
+    <label for="member1_2">Membro 2:</label>
+    <select name="member2" id="member1_2" onchange="updatePhoto('member1_2', 'team1_player2', 'team1_name2')">
+      {% for player in team1.PLAYERS_LIST %}
+        <option value="{{ player }}" {% if player == team1.members[1] %}selected{% endif %}>{{ player }}</option>
+      {% endfor %}
+    </select>
+    
+    <label for="member1_3">Membro 3:</label>
+    <select name="member3" id="member1_3" onchange="updatePhoto('member1_3', 'team1_player3', 'team1_name3')">
+      {% for player in team1.PLAYERS_LIST %}
+        <option value="{{ player }}" {% if player == team1.members[2] %}selected{% endif %}>{{ player }}</option>
+      {% endfor %}
+    </select>
+    
+    <button type="submit">Atualizar Jogadores da Equipe 1</button>
+  </form>
+
+  <!-- Formulário para atualizar jogadores da Equipe 2 -->
+  <h2>Alterar Jogadores da Equipe 2</h2>
+  <form action="{{ url_for('update') }}" method="post">
+    <input type="hidden" name="team" value="2">
+    
+    <label for="member2_1">Membro 1:</label>
+    <select name="member1" id="member2_1" onchange="updatePhoto('member2_1', 'team2_player1', 'team2_name1')">
+      {% for player in team2.PLAYERS_LIST %}
+        <option value="{{ player }}" {% if player == team2.members[0] %}selected{% endif %}>{{ player }}</option>
+      {% endfor %}
+    </select>
+    
+    <label for="member2_2">Membro 2:</label>
+    <select name="member2" id="member2_2" onchange="updatePhoto('member2_2', 'team2_player2', 'team2_name2')">
+      {% for player in team2.PLAYERS_LIST %}
+        <option value="{{ player }}" {% if player == team2.members[1] %}selected{% endif %}>{{ player }}</option>
+      {% endfor %}
+    </select>
+    
+    <label for="member2_3">Membro 3:</label>
+    <select name="member3" id="member2_3" onchange="updatePhoto('member2_3', 'team2_player3', 'team2_name3')">
+      {% for player in team2.PLAYERS_LIST %}
+        <option value="{{ player }}" {% if player == team2.members[2] %}selected{% endif %}>{{ player }}</option>
+      {% endfor %}
+    </select>
+    
+    <button type="submit">Atualizar Jogadores da Equipe 2</button>
+  </form>
+
+  <form action="{{ url_for('reset') }}" method="post">
+    <button type="submit">Reiniciar Jogo</button>
+  </form>
+</body>
+</html>
