@@ -28,4 +28,4 @@ class Team:
 
     @staticmethod
     def get_photo(player_name):
-        return f"{player_name.lower().replace(' ', '').replace('\"', '')}.jpg"
+        return f"{player_name.lower().replace(' ', '')}.jpg"
