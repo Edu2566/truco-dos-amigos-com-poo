@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from app.controllers.game_controller import add_points, reset_game, update_members, game
 
 def create_app():
-    app = Flask(__name__, template_folder='app/views/templates', static_folder='app/static')
+    app = Flask(__name__, template_folder='views/templates', static_folder='static')
 
     @app.route('/')
     def index():
